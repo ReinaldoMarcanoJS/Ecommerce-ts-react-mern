@@ -4,6 +4,7 @@ import { Dashboard } from "./Components/Dashboard.js";
 import { Register } from "./pages/auth/Register.js";
 import { Login } from "./pages/auth/Login.js";
 function App() {
+ 
   return (
     <>
       <BrowserRouter>

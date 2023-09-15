@@ -8,7 +8,7 @@ import { AxiosError } from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { apiLogin } from "../../api/auth";
 import { setUser } from "../../slices/auth.slice";
-import { setIsAuth, setLoadingRequest } from "../../slices/ui.slice";
+import {setIsAuth, setLoadingRequest } from "../../slices/ui.slice";
 import { IRootState } from "../../reducers/rootReducer";
 interface Values {
   email: string;
@@ -17,8 +17,9 @@ interface Values {
 
 export const Login = (): JSX.Element => {
   const loading = useSelector((state: IRootState) => state.ui.loadingRequest);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const formik = useFormik<Values>({
     initialValues: {
       email: "",
@@ -39,7 +40,7 @@ export const Login = (): JSX.Element => {
         const user = (await response).data;
         dispatch(setUser(user));
         dispatch(setIsAuth(true));
-        toast.success("Redirecting")
+        toast.success("Redirecting");
         setTimeout(() => {
           navigate("/");
         }, 1000);
@@ -86,7 +87,7 @@ export const Login = (): JSX.Element => {
             />
             <div className="mobile:relative">
               {Boolean(formik.errors.email) && (
-                <span className="mobile:text-redError absolute bottom-4 mobile:left-3/4 tablet:bg-left">
+                <span className="mobile:text-redError absolute bottom-4 mobile:left-3/4 tablet:bottom-6 desktop:bottom-8 2xl:bottom-10 tablet:bg-left">
                   {formik.errors.email}
                 </span>
               )}
@@ -103,7 +104,7 @@ export const Login = (): JSX.Element => {
             />
             <div className="mobile:relative">
               {Boolean(formik.errors.password) && (
-                <span className="mobile:text-redError absolute bottom-4 mobile:left-3/4">
+                <span className="mobile:text-redError absolute bottom-4 mobile:left-3/4 tablet:bottom-6 desktop:bottom-8 2xl:bottom-10">
                   {formik.errors.password}
                 </span>
               )}

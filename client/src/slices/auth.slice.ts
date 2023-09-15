@@ -1,25 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import { setLoading } from "./ui.slice";
-// import { apiRegister } from "../api/auth";
-// import { User } from "../types";
-const initialState = {
-  User: {
-    id: "",
-    name: "",
-    lastname: "",
-    email: "",
-    createAt: "",
-    updateAt: "",
-  },
+
+let user = {
+  id: "",
+  name: "",
+  lastname: "",
+  email: "",
+  createAt: "",
+  updateAt: "",
 };
 
-// export const fetchAuth = createAsyncThunk(
-//   "dataAuth/fetchAuth",
-//   async (user: User, { dispatch },) => {
-//     dispatch(setLoading(true))
-//     apiRegister(user)
-//   }
-// );
+  let userls = window.localStorage.getItem("User")
+  if(userls != null){
+    user = JSON.parse(userls)
+  }
+
+
+const initialState = {
+  User: user,
+};
 
 export const authSlice = createSlice({
   name: "data",
@@ -27,6 +25,11 @@ export const authSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       state.User = action.payload;
+      if (action.payload === null) {
+        window.localStorage.removeItem("User");
+      } else {
+        window.localStorage.setItem("User", JSON.stringify(action.payload));
+      }
     },
   },
 });

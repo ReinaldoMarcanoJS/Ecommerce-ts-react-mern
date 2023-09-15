@@ -1,6 +1,5 @@
-import { TOKEN_SECRET } from "../config";
 import jwt from "jsonwebtoken";
-
+const TOKEN_SECRET = process.env.TOKEN_SECRET
 type props = {
   payload: Object;
 };
@@ -9,7 +8,7 @@ async function createAccessToken({ payload }: props) {
   return new Promise((resolve, reject) => {
     jwt.sign(
       { payload: payload.toString() },
-      TOKEN_SECRET,
+      `${TOKEN_SECRET}`,
       {
         expiresIn: "2 days",
       },

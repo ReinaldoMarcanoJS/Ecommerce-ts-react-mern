@@ -1,13 +1,14 @@
 import axios from "axios";
 
-
 const instance = axios.create({
-    baseURL: 'http://localhost:3000/api',
-    withCredentials: true,
-    headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    },
-})
+  baseURL: "https://goodshopbackend-production.up.railway.app/api",
+  // baseURL: "http://localhost:3001/api",
 
-export default instance
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
+  withCredentials: true
+});
+
+export default instance;

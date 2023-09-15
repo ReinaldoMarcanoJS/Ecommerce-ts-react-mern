@@ -6,15 +6,30 @@ import { BsPersonCircle } from "react-icons/bs";
 import { ItemCategoryNavbar } from "./ui/Navbar/ItemCategoryNavbar.tsx";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../reducers/rootReducer.ts";
+import { apiLogout } from "../api/auth.ts";
+import toast from "react-hot-toast";
+import { setIsAuth } from "../slices/ui.slice.ts";
+import { setUser } from "../slices/auth.slice.ts";
 export const Navbar = (): JSX.Element => {
   const [OpenModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const isAuth = useSelector((state: IRootState) => state.ui.isAuth);
   const user = useSelector((state: IRootState) => state.auth.User);
-
+  const handleLogout = async () => {
+    const response = await apiLogout()
+    if(response.statusText === "OK"){
+      toast.success("log out")
+      dispatch(setIsAuth(false))
+      dispatch(setUser(null))
+      navigate("/login")
+    }else{
+      toast.error("try Again")
+    }
+  }
   return (
     <>
       <div className="mobile:py-0 mobile:h-28 mobile:px-0 mobile:absolute tablet:absolute desktop:fixed overflow-x-hidden text-white-default pt-2 w-full desktop:h-44 px-10 bg-gradient-to-r from-cyan-900 via-orange-950 to-cyan-900 stop">
@@ -41,7 +56,7 @@ export const Navbar = (): JSX.Element => {
                 <div className="mobile:flex">
                   {isAuth && user ? (
                     <button
-                    onClick={() => navigate("/login")}
+                    onClick={() => handleLogout()}
                     className="ms:h items-center mobile:flex border border-white mobile:text-sm rounded-lg px-2 py-0 mx-2 desktop:text-lg ">
                     <span>Logout </span>
                   </button>

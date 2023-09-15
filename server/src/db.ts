@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
-import { API_URI_DB } from "./config";
 
+const API_URI_DB = process.env.API_URI_DB
 const connectDB = async () => {
   try {
-    await mongoose.connect(API_URI_DB);
-    console.log(">>>>> DB is connected");
+    await mongoose.connect(`${API_URI_DB}`)
+    .then(res => console.log(res.Aggregate));
   } catch (err) {
     console.log(err);
   }

@@ -5,13 +5,14 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import loginRoute from "./routes/Auth.routes";
 import { connectDB } from "./db";
-import { PORT } from "./config";
 const app = express();
 app.use(express.json());
 
+const PORT = process.env.PORT || 3001;
+
 connectDB();
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: "*",
   credentials: true
 }))
 app.use(cookieParser());

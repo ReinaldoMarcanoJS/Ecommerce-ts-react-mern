@@ -12,22 +12,20 @@ import dbUser from "../models/user.model";
  */
 
 export const RegisterUsers = async (req: Request, res: Response) => {
-  const { email, name,  lastname, password } = req.body;
+  res.header("access-Control-Allow-Origin", "*");
+  const { email, name, lastname, password } = req.body;
 
-    const response = await dbUser.findOne({ email });
-    if (response) return res.status(544).send("This email already exist");
+  const response = await dbUser.findOne({ email });
+  if (response) return res.status(544).send("This email already exist");
+  const user = await RegisterUser({ name, lastname, email, password });
 
-    const user = await RegisterUser({ name,lastname, email, password });
-    const token = await createAccessToken({ payload: user._id });
-    console.log(token);
-    console.log(user);
-    
-    res.cookie("token", token);
-    return res.status(200).send("Registred");
- 
+  console.log(user);
+  return res.status(200).send("Registred");
 };
 
 export const getUser = async (req: Request, res: Response) => {
+  res.header("access-Control-Allow-Origin", "*");
+
   const { email } = req.body;
   console.log(req.body);
 
@@ -36,6 +34,8 @@ export const getUser = async (req: Request, res: Response) => {
 };
 
 export const LoginUsers = async (req: Request, res: Response) => {
+  res.header("access-Control-Allow-Origin", "*");
+
   const { email, password } = req.body;
 
   const response = await dbUser.findOne({ email });
@@ -45,6 +45,15 @@ export const LoginUsers = async (req: Request, res: Response) => {
   try {
     const token = await createAccessToken({ payload: response._id });
     res.cookie("token", token);
+    console.log({
+      id: response._id,
+      name: response.name,
+      lastname: response.lastname,
+      email: response.email,
+      createAt: response.createdAt,
+      updateAt: response.updatedAt,
+    });
+    
     return res.status(200).json({
       id: response._id,
       name: response.name,
@@ -56,4 +65,13 @@ export const LoginUsers = async (req: Request, res: Response) => {
   } catch (error) {
     return res.status(401).send("Error Login");
   }
+};
+
+export const Logout = async (_req: Request, res: Response) => {
+  res.header("access-Control-Allow-Origin", "*");
+
+  res.cookie("token", "", {
+    expires: new Date(0),
+  });
+  return res.sendStatus(200);
 };

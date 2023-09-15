@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "commonjs",
   "scripts": {
     "dev": "nodemon src/index.ts",
     "lint": "ts-standard",
@@ -32,6 +33,7 @@
     "express": "4.18.2",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.0.0",
+    "mongoose": "^7.5.1",
     "zod": "^3.22.2"
   },
   "eslintConfig": {

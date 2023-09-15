@@ -1,9 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
+let isAuth = false;
+
+if (window.localStorage.getItem("User")) {
+  isAuth = true;
+}
 
 const initialState = {
   loading: true,
-  isAuth: false,
+  isAuth: isAuth,
   loadingRequest: false,
+  error: null,
 };
 
 export const uiSlice = createSlice({
@@ -15,12 +21,21 @@ export const uiSlice = createSlice({
     },
     setIsAuth: (state, action) => {
       state.isAuth = action.payload;
+      if (action.payload === null) {
+        window.localStorage.removeItem("isAuth");
+      } else {
+        window.localStorage.setItem("isAuth", action.payload);
+      }
     },
     setLoadingRequest: (state, action) => {
       state.loadingRequest = action.payload;
     },
+    setError: (state, action) => {
+      state.error = action.payload;
+    },
   },
 });
 
-export const { setLoading, setIsAuth, setLoadingRequest } = uiSlice.actions;
+export const { setLoading, setIsAuth, setLoadingRequest, setError } =
+  uiSlice.actions;
 export default uiSlice.reducer;
