@@ -4,6 +4,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import loginRoute from "./routes/Auth.routes";
+import ProductRoute from "./routes/Product.routes";
 import { connectDB } from "./db";
 const app = express();
 app.use(express.json());
@@ -23,5 +24,6 @@ app.listen(PORT, () => {
 //Routes
 
 app.use("/api",loginRoute);
+app.use("/api",ProductRoute);
 
 export default app;

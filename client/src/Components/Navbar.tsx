@@ -20,16 +20,16 @@ export const Navbar = (): JSX.Element => {
   const isAuth = useSelector((state: IRootState) => state.ui.isAuth);
   const user = useSelector((state: IRootState) => state.auth.User);
   const handleLogout = async () => {
-    const response = await apiLogout()
-    if(response.statusText === "OK"){
-      toast.success("log out")
-      dispatch(setIsAuth(false))
-      dispatch(setUser(null))
-      navigate("/login")
-    }else{
-      toast.error("try Again")
+    const response = await apiLogout();
+    if (response.data === "OK") {
+      toast.success("log out");
+      dispatch(setIsAuth(false));
+      dispatch(setUser(null));
+      navigate("/login");
+    } else {
+      toast.error("try Again");
     }
-  }
+  };
   return (
     <>
       <div className="mobile:py-0 mobile:h-28 mobile:px-0 mobile:absolute tablet:absolute desktop:fixed overflow-x-hidden text-white-default pt-2 w-full desktop:h-44 px-10 bg-gradient-to-r from-cyan-900 via-orange-950 to-cyan-900 stop">
@@ -56,16 +56,15 @@ export const Navbar = (): JSX.Element => {
                 <div className="mobile:flex">
                   {isAuth && user ? (
                     <button
-                    onClick={() => handleLogout()}
-                    className="ms:h items-center mobile:flex border border-white mobile:text-sm rounded-lg px-2 py-0 mx-2 desktop:text-lg ">
-                    <span>Logout </span>
-                  </button>
+                      onClick={() => handleLogout()}
+                      className="ms:h items-center mobile:flex border border-white mobile:text-sm rounded-lg px-2 py-0 mx-2 desktop:text-lg ">
+                      <span>Logout </span>
+                    </button>
                   ) : (
                     <button
                       onClick={() => navigate("/login")}
                       className="ms:h items-center mobile:flex border border-white mobile:text-xs rounded-lg px-2 py-0 mx-2 desktop:text-lg ">
-                      <span>Iniciar </span>
-                      <span className="mobile:ml-1">Sesion</span>
+                      <span className="mobile:text-lg">Log in </span>
                     </button>
                   )}
                 </div>

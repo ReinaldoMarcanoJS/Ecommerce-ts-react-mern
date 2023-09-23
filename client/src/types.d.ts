@@ -7,3 +7,12 @@ export type User = {
   
   export type LoginUser = Omit<User, "name", "lastname">;
   
+  export type Product = {
+    name: string;
+    description: string;
+    price: string;
+  }[];
+  
+  export type ArrayProducts = {
+    products: Product[]
+  }

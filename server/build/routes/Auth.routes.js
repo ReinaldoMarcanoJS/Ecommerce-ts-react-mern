@@ -10,5 +10,6 @@ const auth_schema_1 = require("../squemas/auth.schema");
 const router = express_1.default.Router();
 router.post('/register', (0, validator_squema_1.ValidateSchema)(auth_schema_1.registerSchema), user_controller_1.RegisterUsers);
 router.get('/user', user_controller_1.getUser);
+router.post('/logout', user_controller_1.Logout);
 router.post('/login', (0, validator_squema_1.ValidateSchema)(auth_schema_1.loginSchema), user_controller_1.LoginUsers);
 exports.default = router;

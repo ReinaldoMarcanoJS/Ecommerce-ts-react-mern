@@ -18,7 +18,7 @@ const API_URI_DB = process.env.API_URI_DB;
 const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield mongoose_1.default.connect(`${API_URI_DB}`)
-            .then(res => console.log(res.Aggregate));
+            .then(() => console.log("Succesfully conection"));
     }
     catch (err) {
         console.log(err);

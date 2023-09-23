@@ -44,7 +44,7 @@ export const LoginUsers = async (req: Request, res: Response) => {
   if (!ismatch) return res.status(400).send("Incorrect password");
   try {
     const token = await createAccessToken({ payload: response._id });
-    res.cookie("token", token);
+    res.cookie("token", token, {sameSite: "none", secure: true});
     console.log({
       id: response._id,
       name: response.name,
@@ -70,7 +70,9 @@ export const LoginUsers = async (req: Request, res: Response) => {
 export const Logout = async (_req: Request, res: Response) => {
   res.header("access-Control-Allow-Origin", "*");
 
-  res.cookie("token", "", {
+  res.cookie("token", "",  {
+    sameSite: 'none', 
+    secure: true,
     expires: new Date(0),
   });
   return res.sendStatus(200);
